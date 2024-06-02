@@ -1,0 +1,29 @@
+<template>
+    <div class="p-8 pb-0">
+        <h1 class="text-4xl font-bold mb-4 text-orange-500">
+            Meals for {{ ingredient.strIngredient }}
+        </h1>
+    </div>
+    <Meals :meals="meals"/>
+</template>
+
+<script setup>
+import { computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import store from '../store';  
+import Meals from '../components/Meals.vue';
+
+const ingredient = computed(() => store.state.ingredient);
+
+const route = useRoute();
+onMounted(() => {
+    store.dispatch('searchByIngredient', route.params.ingredient)
+})
+const meals = computed(() => {
+    return store.state.mealsByIngredients
+});
+</script>
+
+<style>
+
+</style>
